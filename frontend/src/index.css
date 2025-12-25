@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background-dark: #0f0f0f;
+  --color-card-dark: #1a1a1a;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-950 text-white;
+    /* Removed overflow-hidden to enable native window scrolling for Virtuoso & Zen Mode */
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-zinc-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-700 rounded-full;
+}
+
+/* CRITICAL 3D FIX */
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* JARVIS Animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-reverse-spin {
+  animation: spin-slow 25s linear infinite reverse;
+}
