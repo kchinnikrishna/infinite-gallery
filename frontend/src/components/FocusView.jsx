@@ -185,29 +185,58 @@ const FocusView = ({ images, onClose }) => {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
 
-            {/* Speed Dial - Vertical Compact */}
+            {/* PRO SPEED CONTROLLER (Vertical) */}
             <div
-                className="absolute bottom-24 right-8 z-[100] flex flex-col items-center gap-4 bg-black/20 backdrop-blur-sm p-3 rounded-full border border-white/5 opacity-20 hover:opacity-100 transition-all duration-500 ease-out translate-x-4 hover:translate-x-0"
+                className="absolute bottom-24 right-8 z-[100] flex flex-col items-center gap-4 group"
                 onMouseDown={e => e.stopPropagation()}
             >
-                <div className="text-[9px] font-sans tracking-widest text-zinc-500 uppercase writing-vertical-rl rotate-180">
-                    Speed
-                </div>
+                {/* Visual Track Container */}
+                <div className="relative h-48 w-12 flex flex-col items-center justify-between py-2 bg-black/20 backdrop-blur-md rounded-full border border-white/5 opacity-30 group-hover:opacity-100 transition-all duration-500 ease-out translate-x-8 group-hover:translate-x-0 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
 
-                {/* Visual Track for Vertical Slider */}
-                <div className="relative h-32 w-2 flex justify-center">
-                    <input
-                        type="range"
-                        min="0"
-                        max="10"
-                        step="1"
-                        value={speedSetting}
-                        onChange={(e) => setSpeedSetting(parseInt(e.target.value))}
-                        onMouseDown={(e) => e.stopPropagation()}
-                        className="absolute h-32 w-32 -rotate-90 origin-center translate-y-[40px] appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_10px_white] [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-white/10 [&::-webkit-slider-runnable-track]:h-1"
-                    />
+                    {/* Fast Icon (Top) */}
+                    <div className="text-[10px] text-white/50 font-mono mb-2">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+                    </div>
+
+                    {/* The Slider */}
+                    <div className="relative flex-1 w-full flex justify-center">
+                        {/* Custom Track Line */}
+                        <div className="absolute inset-y-0 w-[1px] bg-gradient-to-t from-white/10 via-white/40 to-white/10 pointer-events-none" />
+
+                        {/* Actual Input */}
+                        <input
+                            type="range"
+                            min="0"
+                            max="10"
+                            step="1"
+                            value={speedSetting}
+                            onChange={(e) => setSpeedSetting(parseInt(e.target.value))}
+                            onMouseDown={(e) => e.stopPropagation()}
+                            className="absolute inset-0 h-full w-full opacity-0 cursor-pointer z-10 appearance-none"
+                            style={{ writingMode: 'vertical-rl', direction: 'rtl' }} // Force vertical layout support across browsers
+                        />
+
+                        {/* Custom Thumb Indicator (Visual only) */}
+                        <div
+                            className="absolute w-4 h-4 rounded-full bg-white shadow-[0_0_15px_white] pointer-events-none transition-all duration-75 ease-out"
+                            style={{
+                                bottom: `${(speedSetting / 10) * 80}%`,
+                                transform: 'translateY(50%)'
+                            }}
+                        />
+                    </div>
+
+                    {/* Slow/Stop Icon (Bottom) */}
+                    <div className="text-[10px] text-white/50 font-mono mt-2">
+                        {speedSetting === 0 ? (
+                            <div className="w-2 h-2 bg-red-500 rounded-sm shadow-[0_0_10px_red]" />
+                        ) : (
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M10 8h4v8h-4z" /></svg> // Pause icon shape-ish
+                        )}
+                    </div>
                 </div>
             </div>
+
 
             {/* 3D Infinite Stream */}
             <div className="relative w-full h-full flex items-center justify-center transform-style-3d">
@@ -273,7 +302,7 @@ const FocusView = ({ images, onClose }) => {
                 <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 Stream Active
             </div>
-        </div>
+        </div >
     );
 };
 
